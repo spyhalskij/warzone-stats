@@ -98,6 +98,8 @@ thead th.player-column { background:var(--surface-raised); }
 .detail-item dt small { font-family:var(--stats); font-size:13px; color:var(--muted); text-align:right; }
 .detail-item dd { margin:0; font-family:var(--stats); font-weight:600; font-variant-numeric:tabular-nums; font-size:18px; }
 .season-history { margin:0 0 30px; }
+.season-table { table-layout:auto; width:max-content; min-width:100%; }
+.season-table th,.season-table td { box-sizing:border-box; }
 .season-frame { max-height:610px; }
 .season-table th:first-child { text-align:left; position:sticky; left:0; z-index:1; min-width:168px; max-width:168px; font-family:var(--names); }
 .season-table thead th:first-child { z-index:3; }
