@@ -11,12 +11,13 @@
     "profileUrl": "https://tracker.gg/warzone/profile/atvi/PingedTuba71289%231212878/overview",
     "screens": "warzone_overview.png; details_battle_royale.png; details_resurgence.png; details_plunder.png; seasons_battle_royale.png; seasons_resurgence.png; seasons_plunder.png; performance.png; matches_placements.png",
     "localTranscript": "/workspace/warzone-stats/stats.md",
-    "note": "Read-only WZ1 data captured from Tracker.gg on Nov 5, 2026. These are Jack\u2019s stats only. Detailed lifetime figures use the Details panels; season totals are processed matches and can differ from lifetime match counts. Plunder remains in this JSON archive but is intentionally not offered in the site\u2019s mode switcher."
+    "note": "Read-only WZ1 data captured from Tracker.gg on Nov 5, 2026. These are Jack’s stats only. Detailed lifetime figures use the Details panels; season totals are processed matches and can differ from lifetime match counts. Plunder remains in this JSON archive but is intentionally not offered in the site’s mode switcher."
   },
   "unreadable": [
     "Daily Performance and Daily Progression had no numeric time-series values or Level; the graphs require site-visit data.",
     "BR Damage/game showed no value. Resurgence playtime, score, deaths, downs, Top 5 and weapons were not displayed.",
-    "No prestige, rank-tier history, weapon breakdown, or confirmed fresh match pull was available."
+    "No prestige, rank-tier history, weapon breakdown, or confirmed fresh match pull was available.",
+    "The cached match screenshot is low-resolution: individual match-stat pixels cannot be reliably re-checked against stats.md, so those rows retain the supplied transcription rather than inferred numbers."
   ],
   "modes": {
     "br": {
@@ -119,7 +120,7 @@
           "placement": "12th",
           "age": "4 years ago",
           "mode": "BR Trios",
-          "kd": 21.0,
+          "kd": 21,
           "kills": 21
         }
       },
@@ -134,7 +135,7 @@
           "placement": "1st",
           "age": "4 years ago",
           "mode": "BR Quads",
-          "kd": 20.0,
+          "kd": 20,
           "kills": 20
         }
       },
@@ -149,7 +150,7 @@
           "placement": "1st",
           "age": "4 years ago",
           "mode": "BR Trios",
-          "kd": 28.0,
+          "kd": 28,
           "kills": 28
         }
       },
@@ -164,7 +165,7 @@
           "placement": "2nd",
           "age": "4 years ago",
           "mode": "BR Quads",
-          "kd": 10.0,
+          "kd": 10,
           "kills": 20
         }
       },
@@ -179,7 +180,7 @@
           "placement": "6th",
           "age": "4 years ago",
           "mode": "BR Trios",
-          "kd": 18.0,
+          "kd": 18,
           "kills": 18
         }
       },
@@ -194,7 +195,7 @@
           "placement": "16th",
           "age": "4 years ago",
           "mode": "BR Trios",
-          "kd": 9.0,
+          "kd": 9,
           "kills": 18
         }
       },
@@ -209,7 +210,7 @@
           "placement": "3rd",
           "age": "5 years ago",
           "mode": "BR Trios",
-          "kd": 19.0,
+          "kd": 19,
           "kills": 19
         }
       },
@@ -224,7 +225,7 @@
           "placement": "8th",
           "age": "5 years ago",
           "mode": "BR Quads",
-          "kd": 23.0,
+          "kd": 23,
           "kills": 23
         }
       },
@@ -239,7 +240,7 @@
           "placement": "1st",
           "age": "5 years ago",
           "mode": "BR Duos",
-          "kd": 18.0,
+          "kd": 18,
           "kills": 18
         }
       },
@@ -271,7 +272,7 @@
           "placement": "1st",
           "age": "3 years ago",
           "mode": "Resurgence Trios",
-          "kd": 22.0,
+          "kd": 22,
           "kills": 22
         }
       },
@@ -286,7 +287,7 @@
           "placement": "1st",
           "age": "4 years ago",
           "mode": "Fortunes Keep Res Trios",
-          "kd": 6.0,
+          "kd": 6,
           "kills": 12
         }
       },
@@ -301,7 +302,7 @@
           "placement": "1st",
           "age": "4 years ago",
           "mode": "Resurgence Quads",
-          "kd": 18.0,
+          "kd": 18,
           "kills": 18
         }
       },
@@ -310,13 +311,13 @@
         "matches": 1,
         "avgPlacement": "47th",
         "wins": 0,
-        "kd": 0.0,
+        "kd": 0,
         "kills": 0,
         "bestMatch": {
           "placement": "47th",
           "age": "5 years ago",
           "mode": "Rebirth Resurgence Quads",
-          "kd": 0.0,
+          "kd": 0,
           "kills": 0
         }
       }
@@ -327,13 +328,13 @@
         "matches": 6,
         "avgPlacement": "21st",
         "wins": 0,
-        "kd": 2.0,
+        "kd": 2,
         "kills": 34,
         "bestMatch": {
           "placement": "11th",
           "age": "4 years ago",
           "mode": "Plunder Quads",
-          "kd": 7.0,
+          "kd": 7,
           "kills": 14
         }
       },
@@ -468,7 +469,7 @@
           "placement": "27th",
           "age": "4 years ago",
           "mode": "Plunder Quads",
-          "kd": 2.0,
+          "kd": 2,
           "kills": 14
         }
       }
@@ -582,7 +583,7 @@
         "dealt": 4703,
         "taken": 1115,
         "kills": 12,
-        "kd": 4.0,
+        "kd": 4,
         "teammateKills": [
           2,
           5
@@ -595,7 +596,7 @@
         "dealt": 1951,
         "taken": 917,
         "kills": 4,
-        "kd": 2.0,
+        "kd": 2,
         "teammateKills": [
           2,
           1
@@ -621,7 +622,7 @@
         "dealt": 6728,
         "taken": 1572,
         "kills": 16,
-        "kd": 8.0,
+        "kd": 8,
         "teammateKills": [
           9,
           6
@@ -634,7 +635,7 @@
         "dealt": 0,
         "taken": 300,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -644,7 +645,7 @@
         "dealt": 0,
         "taken": 150,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -654,7 +655,7 @@
         "dealt": 0,
         "taken": 159,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -664,7 +665,7 @@
         "dealt": 0,
         "taken": 150,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -674,7 +675,7 @@
         "dealt": 0,
         "taken": 303,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -684,7 +685,7 @@
         "dealt": 0,
         "taken": 300,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -694,7 +695,7 @@
         "dealt": 0,
         "taken": 150,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -704,7 +705,7 @@
         "dealt": 0,
         "taken": 300,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -714,7 +715,7 @@
         "dealt": 0,
         "taken": 300,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -724,7 +725,7 @@
         "dealt": 0,
         "taken": 300,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -734,7 +735,7 @@
         "dealt": 0,
         "taken": 300,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -744,7 +745,7 @@
         "dealt": 0,
         "taken": 150,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -754,7 +755,7 @@
         "dealt": 0,
         "taken": 155,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -764,7 +765,7 @@
         "dealt": 0,
         "taken": 300,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -774,7 +775,7 @@
         "dealt": 0,
         "taken": 225,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -784,7 +785,7 @@
         "dealt": 0,
         "taken": 304,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -794,7 +795,7 @@
         "dealt": 0,
         "taken": 153,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -804,7 +805,7 @@
         "dealt": 0,
         "taken": 154,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -814,7 +815,7 @@
         "dealt": 0,
         "taken": 300,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -824,7 +825,7 @@
         "dealt": 0,
         "taken": 155,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       },
       {
@@ -834,10 +835,11 @@
         "dealt": 0,
         "taken": 300,
         "kills": 0,
-        "kd": 0.0,
+        "kd": 0,
         "teammateKills": []
       }
     ],
-    "note": "Last-update match rows labeled Nov 15, 2022. The small screenshot supplies the cached summary; the row transcription follows stats.md. Do not treat these rows as a fresh activity feed."
+    "note": "Last-update match rows labeled Nov 15, 2022. The small screenshot supplies the cached summary; the row transcription follows stats.md. Do not treat these rows as a fresh activity feed.",
+    "readability": "Cached row values are transcribed from stats.md. The small matches_placements.png image is insufficient to independently verify every numeric cell; no screenshot-derived corrections are guessed."
   }
 }

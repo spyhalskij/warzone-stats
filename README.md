@@ -27,7 +27,7 @@ All transcribed source values live in `src/data/wz1.json` and `src/data/wz2.json
 
 ## Archive limitations
 
-WZ1 Details panels and Seasons processed-match panels use different denominators. The site identifies them separately and does not force reconciliations. WZ1 lifetime Resurgence has no displayed playtime. Daily Performance/Daily Progression, Level, and weapon data were unavailable. Cached match records are last-update data from a Tracker page reporting Activision-server failures, not a fresh verified match feed. The small archived match image is not treated as a source for newly inferred alternative values; its explicit transcription in `stats.md` is preserved.
+WZ1 Details panels and Seasons processed-match panels use different denominators. The site identifies them separately and does not force reconciliations. WZ1 lifetime Resurgence has no displayed playtime. Daily Performance/Daily Progression, Level, and weapon data were unavailable. Cached match records are last-update data from a Tracker page reporting Activision-server failures, not a fresh verified match feed. The small archived match image cannot be read at enough resolution to independently re-check all cached match-by-match numbers; its transcription comes only from the supplied `stats.md` and carries that qualification.
 
 ## Verification
 
