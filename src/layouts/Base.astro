@@ -21,7 +21,7 @@ const canonical = new URL(base, Astro.site);
  <title>Warzone Stats · Friends archive</title>
  <link rel="canonical" href={canonical}>
  <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml">
- <script src={`${base}app.js?v=2`} defer></script>
+ <script src={`${base}app.js?v=3`} defer></script>
 </head>
 <body data-static-era={/\/wz[12]\/(br|res)\/?$/.test(Astro.url.pathname) ? era : undefined} data-static-mode={/\/wz[12]\/(br|res)\/?$/.test(Astro.url.pathname) ? mode : undefined}>
  <a class="skip-link" href="#board">Skip to stats</a>
@@ -33,7 +33,7 @@ const canonical = new URL(base, Astro.site);
    </div>
    <div class="mode-switch segment" role="group" aria-label="Game mode">
     <a class="segment-option switch-option" href={`${base}?era=${era}&mode=br#${era}-br`} data-mode-target="br" aria-current={mode === 'br' ? 'page' : undefined}>BR</a>
-    <a class="segment-option switch-option" href={`${base}?era=${era}&mode=res#${era}-res`} data-mode-target="res" aria-current={mode === 'res' ? 'page' : undefined}>Resurgence</a>
+    <a class="segment-option switch-option" href={`${base}?era=${era}&mode=res#${era}-res`} data-mode-target="res" aria-current={mode === 'res' ? 'page' : undefined} aria-label="Resurgence"><span class="mode-label-full" aria-hidden="true">Resurgence</span><span class="mode-label-short" aria-hidden="true">Res</span></a>
    </div>
   </nav>
  </header>

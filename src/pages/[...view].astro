@@ -50,7 +50,7 @@ const ordinal = (n:number) => n+(n===1?'st':n===2?'nd':n===3?'rd':'th');
      <button type="button" class="segment-option" data-group="eliminations" aria-pressed="false">Eliminations</button>
      <button type="button" class="segment-option" data-group="placements" aria-pressed="false">Placements</button>
     </div>
-    <div class="board-count"><strong>11</strong> friends · blanks = not in that tab’s top 10</div>
+    <div class="board-count"><strong>11</strong> friends</div>
    </div>
    <div class="table-frame leaderboard-scroll">
     <table class="leaderboard" data-mode={boardMode} aria-label={`WZ2 ${modes[boardMode].full} friends leaderboard`}>
@@ -63,12 +63,12 @@ const ordinal = (n:number) => n+(n===1?'st':n===2?'nd':n===3?'rd':'th');
       {columns.map(column=>{
        const datum=player[boardMode]?.[column.tab]?.[column.key];
        const display=datum==null?'—':column.time?datum:column.decimals===2?Number(datum).toFixed(2):formatNumber(datum);
-       return <td class:list={['sticky-cell','numeric']} data-key={column.key} data-tab={column.tab} data-value={datum??''} hidden={column.tab!=='career'}>{display}{column.key==='timePlayed'&&boardMode==='br'&&datum&&<sup title="Time shown as displayed; screen appears truncated">*</sup>}</td>;
+       return <td class:list={['sticky-cell','numeric']} data-key={column.key} data-tab={column.tab} data-value={datum??''} hidden={column.tab!=='career'} {...(datum==null?{title:`${player.name} was not in this tab’s top 10; this value was not recorded`,'aria-label':'Not recorded; not in this tab’s top 10'}:{})}>{display}{column.key==='timePlayed'&&boardMode==='br'&&datum&&<sup title="Time shown as displayed; screen appears truncated">*</sup>}</td>;
       })}
      </tr>)}</tbody>
     </table>
    </div>
-   {boardMode==='br'&&<p class="data-note">* BR Time Played is shown exactly as on screen; those values appear truncated.</p>}
+   {boardMode==='br'&&<p class="data-note br-time-note" hidden>* BR Time Played is shown exactly as on screen; those values appear truncated.</p>}
   </div>;
  })}
  {viewModes.map(recordMode=>{
@@ -85,10 +85,10 @@ const ordinal = (n:number) => n+(n===1?'st':n===2?'nd':n===3?'rd':'th');
     <p class="updated">Updated Nov 5, 2026</p>
    </section>
    <section class="lifetime" aria-label="Four key lifetime stats">
-    <div class="lifetime-stat jack-accent"><span>Wins</span><strong>{formatNumber(data.wins)}</strong></div>
-    <div class="lifetime-stat jack-accent"><span>K/D</span><strong>{data.kd.toFixed(2)}</strong></div>
-    <div class="lifetime-stat jack-accent"><span>Playtime</span><strong>{data.playtime??'Not displayed'}</strong></div>
-    <div class="lifetime-stat jack-accent"><span>Top 10</span><strong>{formatNumber(data.top10)}</strong></div>
+    <div class="lifetime-stat"><span>Wins</span><strong>{formatNumber(data.wins)}</strong></div>
+    <div class="lifetime-stat"><span>K/D</span><strong>{data.kd.toFixed(2)}</strong></div>
+    <div class="lifetime-stat"><span>Playtime</span><strong>{data.playtime??'Not displayed'}</strong></div>
+    <div class="lifetime-stat"><span>Top 10</span><strong>{formatNumber(data.top10)}</strong></div>
    </section>
    <div class="section-header"><h2>WZ1 lifetime · Jack only</h2><span>{formatNumber(data.matches)} matches · {wz1.player.activisionId}</span></div>
    <dl class="detail-grid">{lifetimeFields.filter(([key])=>data[key as ArchiveMode]!==undefined).map(([key,label])=><div class="detail-item"><dt>{label}{data.comparisons[key]&&<small>{data.comparisons[key]}</small>}</dt><dd>{display(key)}</dd></div>)}</dl>
@@ -99,19 +99,19 @@ const ordinal = (n:number) => n+(n===1?'st':n===2?'nd':n===3?'rd':'th');
     </tbody></table></div>
    </section>
    <div class="archive-sections">
-    <details><summary>Performance & placements <span>How the archived totals split</span></summary><div class="disclosure-body">
+    <details><summary>Performance & placements</summary><div class="disclosure-body">
      <h3>Cross-mode distribution</h3>
      <div class="distribution"><div><h4>Kills</h4>{wz1.performance.killsDistribution.map(row=><div class="distribution-row"><span>{row.label}</span><span class="distribution-track" aria-hidden="true"><span style={`--share:${row.sharePct}%`}></span></span><strong>{row.sharePct.toFixed(2)}%</strong></div>)}</div><div><h4>Wins</h4>{wz1.performance.winsDistribution.map(row=><div class="distribution-row"><span>{row.label}</span><span class="distribution-track" aria-hidden="true"><span style={`--share:${row.sharePct}%`}></span></span><strong>{row.sharePct.toFixed(2)}%</strong></div>)}</div></div>
      <h3>Tracked placements <small>BR + Resurgence · {formatNumber(wz1.placements.trackedMatches)} matches</small></h3>
      <div class="placement-grid">{wz1.placements.rows.map(row=><div><span>{row.label}</span><strong>{formatNumber(row.count)}</strong><span>{row.sharePct.toFixed(1)}%</span></div>)}</div>
      <p class="data-note">{wz1.performance.note} {wz1.placements.note}</p>
     </div></details>
-    <details><summary>Cached match archive <span>Nov 15, 2022 · last tracker update</span></summary><div class="disclosure-body">
+    <details><summary>Cached match archive</summary><div class="disclosure-body">
      <div class="match-summary"><span><strong>1</strong> win</span><span><strong>37</strong> kills</span><span><strong>0.86</strong> K/D</span><span><strong>{formatNumber(wz1.matches.summary.damageDealt)}</strong> dealt</span><span><strong>{formatNumber(wz1.matches.summary.damageTaken)}</strong> taken</span><span><strong>{wz1.matches.summary.lobbyAvgKd.toFixed(2)}</strong> lobby avg.</span></div>
      <div class="table-frame"><table class="match-table"><thead><tr><th>Place</th><th>Mode</th><th>Lobby K/D</th><th>Dealt</th><th>Taken</th><th>Kills</th><th>K/D</th></tr></thead><tbody>{wz1.matches.rows.map(row=><tr><td>{ordinal(row.placement)}</td><th>{row.mode}</th><td>{row.lobbyKd.toFixed(2)}</td><td>{formatNumber(row.dealt)}</td><td>{formatNumber(row.taken)}</td><td>{row.kills}</td><td>{row.kd.toFixed(2)}</td></tr>)}</tbody></table></div>
      <p class="data-note">{wz1.matches.summary.note} Activision-server errors prevented a confirmed fresh pull.</p>
     </div></details>
-    <details><summary>Unavailable in the archive <span>No values guessed</span></summary><ul class="unavailable">{wz1.unreadable.map(note=><li>{note}</li>)}</ul></details>
+    <details><summary>Unavailable in the archive</summary><ul class="unavailable">{wz1.unreadable.map(note=><li>{note}</li>)}</ul></details>
    </div>
   </div>;
  })}

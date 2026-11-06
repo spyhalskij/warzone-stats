@@ -75,6 +75,12 @@
   const rows=[...table.tBodies[0].rows].sort((a,b)=>compare(a,b,key,dir));
   rows.forEach((row,i)=>{const rank=row.querySelector('[data-rank]');rank.textContent=String(i+1);rank.className=`rank${i<3?' rank-'+(i+1):''}`;table.tBodies[0].append(row);});
  }
+ function updateOverlays() {
+  document.querySelectorAll('.era-content:not([hidden]) .leaderboard-scroll').forEach(frame=>{
+   frame.classList.toggle('has-overflow',frame.scrollWidth>frame.clientWidth+1);
+   frame.classList.toggle('is-at-end',frame.scrollLeft+frame.clientWidth>=frame.scrollWidth-1);
+  });
+ }
  function applyState() {
   document.documentElement.dataset.era=era;document.documentElement.dataset.mode=mode;document.documentElement.dataset.group=group;
   document.querySelectorAll('.era-content').forEach(view=>{view.hidden=!(view.dataset.era===era&&view.dataset.mode===mode)});
@@ -89,13 +95,20 @@
   document.querySelectorAll('.group-switch [data-group]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.group===group)));
   const activeTable=tables.find(table=>table.dataset.mode===mode);
   if(era==='wz2'&&activeTable)drawTable(activeTable);
+  document.documentElement.removeAttribute('data-app-ready');
+ document.querySelectorAll('.leaderboard td[data-value=""]').forEach(cell=>cell.tabIndex=0);
+ document.querySelectorAll('.br-time-note').forEach(note=>{note.hidden=!(era==='wz2'&&mode==='br'&&group==='career');});
+ updateOverlays();
   const title=document.querySelector(`.era-content[data-era="${era}"][data-mode="${mode}"] h1`);
   if(title)document.title=title.textContent+' · Warzone Stats';
   const params=new URLSearchParams({era,mode,group,sort:sort[mode].key,dir:sort[mode].dir});
   if(!path)history.replaceState(null,'',`${base}?${params}#${era}-${mode}`);
   try{localStorage.setItem(KEY,JSON.stringify(window.warzoneState));}catch(_){}
+  updateOverlays();
   document.documentElement.dataset.appReady='true';
  }
+ window.addEventListener('resize',updateOverlays);
+ document.querySelectorAll('.leaderboard-scroll').forEach(frame=>frame.addEventListener('scroll',updateOverlays,{passive:true}));
  document.querySelectorAll('[data-era-target],[data-mode-target]').forEach(link=>link.addEventListener('click',event=>{
   if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
   const target=new URL(link.href,location.origin);
@@ -108,7 +121,7 @@
  document.querySelectorAll('.group-switch [data-group]').forEach(button=>button.addEventListener('click',()=>{
   group=button.dataset.group;
   const defaultSort={career:'games',eliminations:'ed',placements:'wins'}[group];
-  const direction=group==='placements'?'desc':'desc';
+  const direction='desc';
   sort[window.warzoneState.mode]={key:defaultSort,dir:direction};
   window.warzoneState.group=group;
   applyState();
