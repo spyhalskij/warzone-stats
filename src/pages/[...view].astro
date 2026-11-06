@@ -9,19 +9,38 @@ export function getStaticPaths() {
 }
 interface Props { era?:EraKey; mode?:ModeKey; }
 const { era='wz2', mode='br' } = Astro.props;
-const columns = [
- { tab:'career', key:'games', label:'Games played', short:'Games', decimals:0 },
- { tab:'career', key:'timePlayed', label:'Time played (as displayed)', short:'Time', time:true },
- { tab:'eliminations', key:'elims', label:'Eliminations', short:'Elims', decimals:0 },
- { tab:'eliminations', key:'deaths', label:'Deaths', short:'Deaths', decimals:0 },
- { tab:'eliminations', key:'ed', label:'Elimination / death ratio', short:'E/D', decimals:2 },
- { tab:'eliminations', key:'streak', label:'Highest streak', short:'Streak', decimals:0 },
- { tab:'eliminations', key:'avgElims', label:'Average elims / game', short:'Avg elims', decimals:0 },
- { tab:'placements', key:'wins', label:'Wins', short:'Wins', decimals:0 },
- { tab:'placements', key:'top10', label:'Top 10 finishes', short:'Top 10', decimals:0 },
- { tab:'placements', key:'avgPlacement', label:'Average placement', short:'Avg place', decimals:0 },
- { tab:'placements', key:'avgSurvival', label:'Average survival (as displayed)', short:'Avg survival', time:true }
+type Column = {
+ set:'placements'|'derived'|'eliminations'|'detail';
+ key:string; label:string; short:string;
+ decimals?:number; time?:boolean; percent?:'top10Rate'|'winRate'; numerator?:'top10'|'wins';
+};
+const columns:Column[] = [
+ {set:'placements',key:'games',label:'Games played',short:'Games',decimals:0},
+ {set:'placements',key:'top10',label:'Top 10 finishes',short:'Top 10',decimals:0},
+ {set:'placements',key:'wins',label:'Wins',short:'Wins',decimals:0},
+ {set:'derived',key:'top10Rate',label:'Top 10 percentage',short:'Top 10 %',percent:'top10Rate',numerator:'top10'},
+ {set:'derived',key:'winRate',label:'Win percentage',short:'Win %',percent:'winRate',numerator:'wins'},
+ {set:'eliminations',key:'elims',label:'Eliminations',short:'Elims',decimals:0},
+ {set:'eliminations',key:'deaths',label:'Deaths',short:'Deaths',decimals:0},
+ {set:'eliminations',key:'ed',label:'Elimination / death ratio',short:'E/D',decimals:2},
+ {set:'eliminations',key:'streak',label:'Highest streak',short:'Streak',decimals:0},
+ {set:'eliminations',key:'avgElims',label:'Average elims / game',short:'Avg elims',decimals:0},
+ {set:'detail',key:'avgPlacement',label:'Average placement',short:'Avg place',decimals:0},
+ {set:'detail',key:'avgSurvival',label:'Average survival (as displayed)',short:'Avg survival',time:true},
+ {set:'detail',key:'timePlayed',label:'Time played (as displayed)',short:'Time',time:true}
 ];
+const cellInfo = (column:Column,player:typeof wz2.players[0],mode:ModeKey) => {
+ const base=column.percent?'':column.set==='placements'?player[mode]?.career?.[column.key as 'games']??player[mode]?.placements?.[column.key as 'wins']:player[mode]?.[column.set]?.[column.key as 'elims'];
+ if(column.percent){
+  const games=player[mode]?.career?.games;
+  const numerator=player[mode]?.placements?.[column.numerator!];
+  const valid=typeof games==='number'&&games>0&&typeof numerator==='number';
+  const rate=valid?(numerator/games)*100:null;
+  return{datum:null,display:rate==null?'—':`${rate.toFixed(1)}%`,value:rate??'',formula:valid?`${numerator} ÷ ${games} × 100`:null};
+ }
+ return{datum:base,display:base==null||base===''?'—':column.time?String(base):column.decimals===2?Number(base).toFixed(2):formatNumber(base),value:base??''};
+};
+
 const lifetimeFields = [
  ['playtime', 'Playtime'], ['matches', 'Matches'], ['winPct', 'Win %'], ['wins', 'Wins'],
  ['kills', 'Kills'], ['kd', 'K/D ratio'], ['top5', 'Top 5'], ['top10', 'Top 10'],
@@ -46,9 +65,9 @@ const ordinal = (n:number) => n+(n===1?'st':n===2?'nd':n===3?'rd':'th');
    </section>
    <div class="board-controls">
     <div class="segment group-switch" role="group" aria-label="Leaderboard column group">
-     <button type="button" class="segment-option" data-group="career" aria-pressed="true">Career</button>
-     <button type="button" class="segment-option" data-group="eliminations" aria-pressed="false">Eliminations</button>
+     <button type="button" class="segment-option" data-group="all" aria-pressed="false">All</button>
      <button type="button" class="segment-option" data-group="placements" aria-pressed="false">Placements</button>
+     <button type="button" class="segment-option" data-group="eliminations" aria-pressed="false">Eliminations</button>
     </div>
     <div class="board-count"><strong>11</strong> friends</div>
    </div>
@@ -56,15 +75,15 @@ const ordinal = (n:number) => n+(n===1?'st':n===2?'nd':n===3?'rd':'th');
     <table class="leaderboard" data-mode={boardMode} aria-label={`WZ2 ${modes[boardMode].full} friends leaderboard`}>
      <thead><tr>
       <th class="player-column" data-key="name" scope="col"><button class="sort-button" type="button">Player <span class="chevron" aria-hidden="true"></span></button></th>
-      {columns.map(column=><th class="sticky-cell" data-key={column.key} data-tab={column.tab} class:list={['numeric']} scope="col" hidden={column.tab!=='career'}><button class="sort-button" type="button" ><span class="header-label">{column.short}</span><span class="sr-only" >Sort by {column.label}</span><span class="chevron" aria-hidden="true"></span></button></th>)}
+      {columns.map(column=><th class:list={['sticky-cell','numeric',column.set==='eliminations'&&'stat-group-start']} data-key={column.key} data-tabs={column.set==='eliminations'?'all,eliminations':'all,placements'} data-set={column.set} scope="col"><button class="sort-button" type="button"><span class="header-label">{column.short}</span><span class="sr-only">Sort by {column.label}</span><span class="chevron" aria-hidden="true"></span></button></th>)}
      </tr></thead>
      <tbody>{players.map((player,i)=><tr class:list={['player-row',player.isJack&&'jack-row']} data-name={player.name}>
       <th class="player-column" scope="row"><span class:list={['rank',i<3&&`rank-${i+1}`]} data-rank>{i+1}</span><span class="player-name">{player.name}</span></th>
       {columns.map(column=>{
-       const datum=player[boardMode]?.[column.tab]?.[column.key];
-       const display=datum==null?'—':column.time?datum:column.decimals===2?Number(datum).toFixed(2):formatNumber(datum);
-       return <td class:list={['sticky-cell','numeric']} data-key={column.key} data-tab={column.tab} data-value={datum??''} hidden={column.tab!=='career'} {...(datum==null?{title:`${player.name} was not in this tab’s top 10; this value was not recorded`,'aria-label':'Not recorded; not in this tab’s top 10'}:{})}>{display}{column.key==='timePlayed'&&boardMode==='br'&&datum&&<sup title="Time shown as displayed; screen appears truncated">*</sup>}</td>;
+       const {datum,display,value,formula}=cellInfo(column,player,boardMode);
+       return <td class:list={['sticky-cell','numeric',column.set==='eliminations'&&'stat-group-start']} data-key={column.key} data-tabs={column.set==='eliminations'?'all,eliminations':'all,placements'} data-value={value} hidden={false} {...(column.percent?{title:formula?`${player.name}: ${formula} = ${display}`:'Not enough recorded data for this rate','aria-label':formula?`${column.label}: ${display}; ${formula}`: `${column.label}: not recorded`}:datum==null?{title:`${player.name} was not in this tab’s top 10; this value was not recorded`,'aria-label':'Not recorded; not in this tab’s top 10'}:{})}>{display}{column.key==='timePlayed'&&boardMode==='br'&&datum&&<sup title="Time shown as displayed; screen appears truncated">*</sup>}</td>;
       })}
+
      </tr>)}</tbody>
     </table>
    </div>
