@@ -1,0 +1,572 @@
+{
+  "captureDate": "2026-11-05",
+  "title": "Warzone friends leaderboards",
+  "era": "wz2",
+  "source": {
+    "kind": "In-game Friends Only leaderboards",
+    "localTranscript": "/workspace/warzone-stats/ingame/ingame.md",
+    "images": [
+      "br_career.jpg",
+      "br_eliminations.jpg",
+      "br_placements.jpg",
+      "res_career.jpg",
+      "res_eliminations.jpg",
+      "res_placements.jpg"
+    ],
+    "note": "Jack\u2019s in-game Friends Only leaderboards, photographed Nov 5, 2026 around 6:47\u20136:48 PM America/New_York. Each tab is a visible top 10; missing tab entries are blank, not zero. Ranks come from the source tab, not from an overall player order.",
+    "timeNote": "BR Time Played values appear truncated on the game screen. They are reproduced exactly as displayed; no unit conversion was applied."
+  },
+  "jackPlayer": "PINGEDTUBA71289",
+  "players": [
+    {
+      "name": "PINGEDTUBA71289",
+      "isJack": true,
+      "br": {
+        "career": {
+          "rank": 2,
+          "score": 2680330,
+          "scorePerMin": 203,
+          "games": 574,
+          "timePlayed": "13M 12S",
+          "timeDisplayedTruncated": true
+        },
+        "eliminations": {
+          "rank": 1,
+          "elims": 4440,
+          "deaths": 1153,
+          "ed": 3.85,
+          "streak": 19,
+          "avgElims": 7
+        },
+        "placements": {
+          "rank": 2,
+          "wins": 58,
+          "top10": 381,
+          "avgPlacement": 8,
+          "avgSurvival": "21M 54S"
+        }
+      },
+      "res": {
+        "career": {
+          "rank": 2,
+          "score": 3255921,
+          "scorePerMin": 365,
+          "games": 682,
+          "timePlayed": "6D 4H 29M",
+          "timeDisplayedTruncated": false
+        },
+        "eliminations": {
+          "rank": 2,
+          "elims": 6305,
+          "deaths": 1512,
+          "ed": 4.17,
+          "streak": 22,
+          "avgElims": 9
+        },
+        "placements": {
+          "rank": 2,
+          "wins": 172,
+          "top10": 444,
+          "avgPlacement": 4,
+          "avgSurvival": "11M 58S"
+        }
+      }
+    },
+    {
+      "name": "UNCBBALL0327",
+      "isJack": false,
+      "br": {
+        "career": {
+          "rank": 1,
+          "score": 2826970,
+          "scorePerMin": 168,
+          "games": 755,
+          "timePlayed": "16M 48S",
+          "timeDisplayedTruncated": true
+        },
+        "eliminations": {
+          "rank": 2,
+          "elims": 4266,
+          "deaths": 1888,
+          "ed": 2.26,
+          "streak": 17,
+          "avgElims": 5
+        },
+        "placements": {
+          "rank": 1,
+          "wins": 59,
+          "top10": 483,
+          "avgPlacement": 9,
+          "avgSurvival": "21M 14S"
+        }
+      },
+      "res": {
+        "career": {
+          "rank": 1,
+          "score": 4720265,
+          "scorePerMin": 339,
+          "games": 1120,
+          "timePlayed": "9D 15H 35M",
+          "timeDisplayedTruncated": false
+        },
+        "eliminations": {
+          "rank": 1,
+          "elims": 8538,
+          "deaths": 3211,
+          "ed": 2.66,
+          "streak": 21,
+          "avgElims": 7
+        },
+        "placements": {
+          "rank": 1,
+          "wins": 217,
+          "top10": 767,
+          "avgPlacement": 4,
+          "avgSurvival": "11M 22S"
+        }
+      }
+    },
+    {
+      "name": "BULLET DIAPER",
+      "isJack": false,
+      "br": {
+        "career": {
+          "rank": 3,
+          "score": 1624405,
+          "scorePerMin": 112,
+          "games": 721,
+          "timePlayed": "14M 26S",
+          "timeDisplayedTruncated": true
+        },
+        "eliminations": {
+          "rank": 4,
+          "elims": 1820,
+          "deaths": 1811,
+          "ed": 1.0,
+          "streak": 8,
+          "avgElims": 2
+        },
+        "placements": {
+          "rank": 3,
+          "wins": 24,
+          "top10": 368,
+          "avgPlacement": 13,
+          "avgSurvival": "18M 56S"
+        }
+      },
+      "res": {
+        "career": {
+          "rank": 3,
+          "score": 2150020,
+          "scorePerMin": 217,
+          "games": 793,
+          "timePlayed": "6D 20H 27M",
+          "timeDisplayedTruncated": false
+        },
+        "eliminations": {
+          "rank": 3,
+          "elims": 2889,
+          "deaths": 2568,
+          "ed": 1.13,
+          "streak": 14,
+          "avgElims": 3
+        },
+        "placements": {
+          "rank": 3,
+          "wins": 113,
+          "top10": 595,
+          "avgPlacement": 5,
+          "avgSurvival": "11M 22S"
+        }
+      }
+    },
+    {
+      "name": "SIRULRICH",
+      "isJack": false,
+      "br": {
+        "career": {
+          "rank": 4,
+          "score": 1302805,
+          "scorePerMin": 154,
+          "games": 413,
+          "timePlayed": "8M 25S",
+          "timeDisplayedTruncated": true
+        },
+        "eliminations": {
+          "rank": 3,
+          "elims": 1962,
+          "deaths": 924,
+          "ed": 2.12,
+          "streak": 11,
+          "avgElims": 4
+        },
+        "placements": {
+          "rank": 9,
+          "wins": 12,
+          "top10": 232,
+          "avgPlacement": 12,
+          "avgSurvival": "19M 18S"
+        }
+      },
+      "res": {
+        "career": {
+          "rank": 9,
+          "score": 249895,
+          "scorePerMin": 249,
+          "games": 78,
+          "timePlayed": "16H 40M",
+          "timeDisplayedTruncated": false
+        },
+        "eliminations": {
+          "rank": 7,
+          "elims": 441,
+          "deaths": 234,
+          "ed": 1.88,
+          "streak": 10,
+          "avgElims": 5
+        },
+        "placements": {
+          "rank": 10,
+          "wins": 5,
+          "top10": 67,
+          "avgPlacement": 4,
+          "avgSurvival": "11M 44S"
+        }
+      }
+    },
+    {
+      "name": "OPTIMUS_KRINE",
+      "isJack": false,
+      "br": {
+        "career": {
+          "rank": 5,
+          "score": 1019930,
+          "scorePerMin": 120,
+          "games": 409,
+          "timePlayed": "8M 29S",
+          "timeDisplayedTruncated": true
+        },
+        "eliminations": {
+          "rank": 6,
+          "elims": 950,
+          "deaths": 1006,
+          "ed": 0.94,
+          "streak": 6,
+          "avgElims": 2
+        },
+        "placements": {
+          "rank": 6,
+          "wins": 16,
+          "top10": 227,
+          "avgPlacement": 12,
+          "avgSurvival": "19M 41S"
+        }
+      },
+      "res": {
+        "career": {
+          "rank": 10,
+          "score": 176785,
+          "scorePerMin": 185,
+          "games": 76,
+          "timePlayed": "15H 51M",
+          "timeDisplayedTruncated": false
+        },
+        "eliminations": {
+          "rank": 10,
+          "elims": 241,
+          "deaths": 254,
+          "ed": 0.95,
+          "streak": 5,
+          "avgElims": 3
+        },
+        "placements": {
+          "rank": 9,
+          "wins": 14,
+          "top10": 53,
+          "avgPlacement": 4,
+          "avgSurvival": "11M 26S"
+        }
+      }
+    },
+    {
+      "name": "NOOBLORD",
+      "isJack": false,
+      "br": {
+        "career": {
+          "rank": 6,
+          "score": 913215,
+          "scorePerMin": 96,
+          "games": 458,
+          "timePlayed": "9M 27S",
+          "timeDisplayedTruncated": true
+        },
+        "eliminations": {
+          "rank": 7,
+          "elims": 908,
+          "deaths": 1120,
+          "ed": 0.81,
+          "streak": 6,
+          "avgElims": 1
+        },
+        "placements": {
+          "rank": 6,
+          "wins": 16,
+          "top10": 251,
+          "avgPlacement": 11,
+          "avgSurvival": "19M 35S"
+        }
+      },
+      "res": {
+        "career": {
+          "rank": 5,
+          "score": 955085,
+          "scorePerMin": 179,
+          "games": 430,
+          "timePlayed": "3D 16H 34M",
+          "timeDisplayedTruncated": false
+        },
+        "eliminations": {
+          "rank": 5,
+          "elims": 1340,
+          "deaths": 1374,
+          "ed": 0.98,
+          "streak": 10,
+          "avgElims": 3
+        },
+        "placements": {
+          "rank": 5,
+          "wins": 45,
+          "top10": 332,
+          "avgPlacement": 5,
+          "avgSurvival": "11M 18S"
+        }
+      }
+    },
+    {
+      "name": "FREEBIRDSR",
+      "isJack": false,
+      "br": {
+        "career": {
+          "rank": 7,
+          "score": 821465,
+          "scorePerMin": 99,
+          "games": 417,
+          "timePlayed": "8M 17S",
+          "timeDisplayedTruncated": true
+        },
+        "eliminations": {
+          "rank": 5,
+          "elims": 1085,
+          "deaths": 1140,
+          "ed": 0.95,
+          "streak": 9,
+          "avgElims": 2
+        },
+        "placements": {
+          "rank": 4,
+          "wins": 20,
+          "top10": 201,
+          "avgPlacement": 13,
+          "avgSurvival": "18M 50S"
+        }
+      },
+      "res": {
+        "career": {
+          "rank": 8,
+          "score": 304000,
+          "scorePerMin": 163,
+          "games": 160,
+          "timePlayed": "1D 6H 55M",
+          "timeDisplayedTruncated": false
+        },
+        "eliminations": {
+          "rank": 8,
+          "elims": 426,
+          "deaths": 544,
+          "ed": 0.78,
+          "streak": 6,
+          "avgElims": 2
+        },
+        "placements": {
+          "rank": 7,
+          "wins": 25,
+          "top10": 104,
+          "avgPlacement": 6,
+          "avgSurvival": "10M 33S"
+        }
+      }
+    },
+    {
+      "name": "BULLETSPONGE",
+      "isJack": false,
+      "br": {
+        "career": {
+          "rank": 8,
+          "score": 784600,
+          "scorePerMin": 120,
+          "games": 360,
+          "timePlayed": "6M 31S",
+          "timeDisplayedTruncated": true
+        },
+        "eliminations": {
+          "rank": 8,
+          "elims": 812,
+          "deaths": 865,
+          "ed": 0.94,
+          "streak": 12,
+          "avgElims": 2
+        },
+        "placements": null
+      },
+      "res": {
+        "career": {
+          "rank": 6,
+          "score": 883310,
+          "scorePerMin": 234,
+          "games": 314,
+          "timePlayed": "2D 14H 44M",
+          "timeDisplayedTruncated": false
+        },
+        "eliminations": {
+          "rank": 6,
+          "elims": 1193,
+          "deaths": 1040,
+          "ed": 1.15,
+          "streak": 9,
+          "avgElims": 3
+        },
+        "placements": {
+          "rank": 6,
+          "wins": 31,
+          "top10": 238,
+          "avgPlacement": 6,
+          "avgSurvival": "10M 55S"
+        }
+      }
+    },
+    {
+      "name": "NORMAL_SUPPLIER1",
+      "isJack": false,
+      "br": {
+        "career": {
+          "rank": 9,
+          "score": 561730,
+          "scorePerMin": 78,
+          "games": 340,
+          "timePlayed": "7M 8S",
+          "timeDisplayedTruncated": true
+        },
+        "eliminations": {
+          "rank": 10,
+          "elims": 455,
+          "deaths": 910,
+          "ed": 0.5,
+          "streak": 10,
+          "avgElims": 1
+        },
+        "placements": {
+          "rank": 5,
+          "wins": 18,
+          "top10": 191,
+          "avgPlacement": 11,
+          "avgSurvival": "19M 56S"
+        }
+      },
+      "res": {
+        "career": {
+          "rank": 4,
+          "score": 1184155,
+          "scorePerMin": 150,
+          "games": 643,
+          "timePlayed": "5D 11H 12M",
+          "timeDisplayedTruncated": false
+        },
+        "eliminations": {
+          "rank": 4,
+          "elims": 1756,
+          "deaths": 2158,
+          "ed": 0.81,
+          "streak": 6,
+          "avgElims": 2
+        },
+        "placements": {
+          "rank": 4,
+          "wins": 87,
+          "top10": 481,
+          "avgPlacement": 5,
+          "avgSurvival": "11M 11S"
+        }
+      }
+    },
+    {
+      "name": "HUNTERGATHER",
+      "isJack": false,
+      "br": {
+        "career": {
+          "rank": 10,
+          "score": 495135,
+          "scorePerMin": 123,
+          "games": 185,
+          "timePlayed": "4M 1S",
+          "timeDisplayedTruncated": true
+        },
+        "eliminations": {
+          "rank": 9,
+          "elims": 460,
+          "deaths": 542,
+          "ed": 0.85,
+          "streak": 5,
+          "avgElims": 2
+        },
+        "placements": {
+          "rank": 8,
+          "wins": 14,
+          "top10": 112,
+          "avgPlacement": 9,
+          "avgSurvival": "20M 41S"
+        }
+      },
+      "res": {
+        "career": {
+          "rank": 7,
+          "score": 344360,
+          "scorePerMin": 209,
+          "games": 131,
+          "timePlayed": "1D 3H 22M",
+          "timeDisplayedTruncated": false
+        },
+        "eliminations": {
+          "rank": 9,
+          "elims": 409,
+          "deaths": 506,
+          "ed": 0.81,
+          "streak": 7,
+          "avgElims": 3
+        },
+        "placements": {
+          "rank": 8,
+          "wins": 21,
+          "top10": 101,
+          "avgPlacement": 4,
+          "avgSurvival": "11M 28S"
+        }
+      }
+    },
+    {
+      "name": "DRHOUSE9054",
+      "isJack": false,
+      "br": {
+        "career": null,
+        "eliminations": null,
+        "placements": {
+          "rank": 10,
+          "wins": 5,
+          "top10": 28,
+          "avgPlacement": 9,
+          "avgSurvival": "21M 19S"
+        }
+      },
+      "res": null
+    }
+  ]
+}

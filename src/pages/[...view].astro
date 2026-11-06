@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+import wz2 from '../data/wz2.json';
+import wz1 from '../data/wz1.json';
+import callouts from '../data/callouts.json';
+import { modes, type EraKey, type ModeKey, formatNumber } from '../data/modes';
+export function getStaticPaths() {
+ return ['wz1','wz2'].flatMap(era => ['br','res'].map(mode => ({params:{view:`${era}/${mode}`},props:{era,mode}})));
+}
+interface Props { era?:EraKey; mode?:ModeKey; }
+const { era='wz2', mode='br' } = Astro.props;
+const columns = [
+ { tab:'career', key:'score', label:'Score', short:'Score', decimals:0, priority:true },
+ { tab:'career', key:'scorePerMin', label:'Score / min', short:'S/min', decimals:0, priority:true },
+ { tab:'career', key:'games', label:'Games played', short:'Games', decimals:0, priority:true },
+ { tab:'career', key:'timePlayed', label:'Time played (as displayed)', short:'Time', time:true },
+ { tab:'eliminations', key:'elims', label:'Eliminations', short:'Elims', decimals:0 },
+ { tab:'eliminations', key:'deaths', label:'Deaths', short:'Deaths', decimals:0 },
+ { tab:'eliminations', key:'ed', label:'Elimination / death ratio', short:'E/D', decimals:2, priority:true },
+ { tab:'eliminations', key:'streak', label:'Highest streak', short:'Streak', decimals:0 },
+ { tab:'eliminations', key:'avgElims', label:'Average elims / game', short:'Avg elims', decimals:0 },
+ { tab:'placements', key:'wins', label:'Wins', short:'Wins', decimals:0, priority:true },
+ { tab:'placements', key:'top10', label:'Top 10 finishes', short:'Top 10', decimals:0 },
+ { tab:'placements', key:'avgPlacement', label:'Average placement', short:'Avg place', decimals:0 },
+ { tab:'placements', key:'avgSurvival', label:'Average survival (as displayed)', short:'Avg survival', time:true }
+];
+const lifetimeFields = [
+ ['playtime', 'Playtime'], ['matches', 'Matches'], ['winPct', 'Win %'], ['wins', 'Wins'],
+ ['kills', 'Kills'], ['kd', 'K/D ratio'], ['top5', 'Top 5'], ['top10', 'Top 10'],
+ ['top25', 'Top 25'], ['deaths', 'Deaths'], ['downs', 'Downs'], ['avgLife', 'Avg. life'],
+ ['score', 'Score'], ['scorePerMin', 'Score / min'], ['scorePerGame', 'Score / game'],
+ ['cash', 'Cash'], ['contracts', 'Contracts']
+] as const;
+type Callout = {label:string; display:string; names:string[]};
+type ArchiveMode = keyof typeof wz1.modes;
+const viewModes:ModeKey[] = ['br','res'];
+const ordinal = (n:number) => n+(n===1?'st':n===2?'nd':n===3?'rd':'th');
+---
+<Base era={era} mode={mode}>
+ {viewModes.map(boardMode => {
+  const players = [...wz2.players].sort((a,b)=>(b[boardMode]?.career?.score??-Infinity)-(a[boardMode]?.career?.score??-Infinity));
+  return <div class="era-content wz2-content" data-era="wz2" data-mode={boardMode} hidden={!(era==='wz2'&&mode===boardMode)}>
+   <section class="heading">
+    <div class="eyebrow">Squad ledger / current era</div>
+    <h1>WZ2 {modes[boardMode].full}</h1>
+    <p class="updated">Updated Nov 5, 2026 · Friends only</p>
+   </section>
+   <section class="callouts" aria-label="Leaderboard callouts">
+    {Object.values(callouts.modes[boardMode]).map((item:Callout)=><div class="callout"><span>{item.label}</span><strong>{item.display}</strong><span class="callout-name">{item.names.join(' & ')}</span></div>)}
+   </section>
+   <div class="board-controls">
+    <div class="segment group-switch" role="group" aria-label="Leaderboard column group">
+     <button type="button" class="segment-option" data-group="career" aria-pressed="true">Career</button>
+     <button type="button" class="segment-option" data-group="eliminations" aria-pressed="false">Eliminations</button>
+     <button type="button" class="segment-option" data-group="placements" aria-pressed="false">Placements</button>
+    </div>
+    <div class="board-count"><strong>11</strong> friends · blanks = not in that tab’s top 10</div>
+   </div>
+   <div class="table-frame">
+    <table class="leaderboard" data-mode={boardMode} aria-label={`WZ2 ${modes[boardMode].full} friends leaderboard`}>
+     <thead><tr>
+      <th class="player-column" data-key="name" scope="col"><button class="sort-button" type="button">Player <span class="chevron" aria-hidden="true"></span></button></th>
+      {columns.map(column=><th data-key={column.key} data-tab={column.tab} class:list={[column.priority&&'priority','numeric']} scope="col" hidden={column.tab!=='career'&&!column.priority}><button class="sort-button" type="button">Sort by {column.label}<span class="chevron" aria-hidden="true"></span></button></th>)}
+     </tr></thead>
+     <tbody>{players.map((player,i)=><tr class:list={['player-row',player.isJack&&'jack-row']} data-name={player.name}>
+      <th class="player-column" scope="row"><span class:list={['rank',i<3&&`rank-${i+1}`]} data-rank>{i+1}</span><span class="player-name">{player.name}{player.isJack&&<span class="jack-label">Jack</span>}</span></th>
+      {columns.map(column=>{
+       const datum=player[boardMode]?.[column.tab]?.[column.key];
+       const display=datum==null?'—':column.time?datum:column.decimals===2?Number(datum).toFixed(2):formatNumber(datum);
+       return <td class:list={[column.priority&&'priority','numeric']} data-key={column.key} data-tab={column.tab} data-value={datum??''} hidden={column.tab!=='career'&&!column.priority}>{display}{column.key==='timePlayed'&&boardMode==='br'&&datum&&<sup title="Time shown as displayed; screen appears truncated">*</sup>}</td>;
+      })}
+     </tr>)}</tbody>
+    </table>
+   </div>
+   {boardMode==='br'&&<p class="data-note">* BR Time Played is shown exactly as on screen; those values appear truncated.</p>}
+  </div>;
+ })}
+ {viewModes.map(recordMode=>{
+  const data=wz1.modes[recordMode as ArchiveMode];
+  const display=(key:string)=>{
+   const raw=data[key as keyof typeof data];
+   if(raw==null)return 'Not displayed';
+   if(typeof raw==='number')return key==='winPct'?`${raw}%`:key==='kd'?raw.toFixed(2):formatNumber(raw);
+   return String(raw);
+  };
+  return <div class="era-content wz1-content" data-era="wz1" data-mode={recordMode} hidden={!(era==='wz1'&&mode===recordMode)}>
+   <section class="heading">
+    <div class="eyebrow">Jack’s record / 2019 – late 2022</div>
+    <h1>WZ1 {modes[recordMode].full}</h1>
+    <p class="updated">Updated Nov 5, 2026 · Friends only</p>
+   </section>
+   <section class="lifetime" aria-label="Four key lifetime stats">
+    <div class="lifetime-stat jack-accent"><span>Wins</span><strong>{formatNumber(data.wins)}</strong></div>
+    <div class="lifetime-stat jack-accent"><span>K/D</span><strong>{data.kd.toFixed(2)}</strong></div>
+    <div class="lifetime-stat jack-accent"><span>Playtime</span><strong>{data.playtime??'Not displayed'}</strong></div>
+    <div class="lifetime-stat jack-accent"><span>Top 10</span><strong>{formatNumber(data.top10)}</strong></div>
+   </section>
+   <div class="section-header"><h2>Lifetime detail</h2><span>{formatNumber(data.matches)} matches · {wz1.player.activisionId}</span></div>
+   <dl class="detail-grid">{lifetimeFields.filter(([key])=>data[key as ArchiveMode]!==undefined).map(([key,label])=><div class="detail-item"><dt>{label}{data.comparisons[key]&&<small>{data.comparisons[key]}</small>}</dt><dd>{display(key)}</dd></div>)}</dl>
+   <section class="season-history" aria-label="Season history">
+    <div class="section-header"><h2>Season history</h2><span>{formatNumber(data.processedMatches)} processed matches · not all season play included</span></div>
+    <div class="table-frame season-frame"><table class="season-table"><thead><tr><th>Season</th><th>Matches</th><th>Avg place</th><th>Wins</th><th>K/D</th><th>Kills</th><th>Best match</th></tr></thead><tbody>
+     {wz1.seasons[recordMode as ArchiveMode].map(row=><tr><th scope="row">{row.season}</th><td>{formatNumber(row.matches)}</td><td>{row.avgPlacement}</td><td>{row.wins}</td><td>{row.kd.toFixed(2)}</td><td>{formatNumber(row.kills)}</td><td><span>{row.bestMatch.placement}</span> {row.bestMatch.mode}<small>{row.bestMatch.age} · {row.bestMatch.kd.toFixed(2)} K/D · {row.bestMatch.kills} kills</small></td></tr>)}
+    </tbody></table></div>
+   </section>
+   <div class="archive-sections">
+    <details><summary>Performance & placements <span>How the archived totals split</span></summary><div class="disclosure-body">
+     <h3>Cross-mode distribution</h3>
+     <div class="distribution"><div><h4>Kills</h4>{wz1.performance.killsDistribution.map(row=><div class="distribution-row"><span>{row.label}</span><span class="distribution-track" aria-hidden="true"><span style={`--share:${row.sharePct}%`}></span></span><strong>{row.sharePct.toFixed(2)}%</strong></div>)}</div><div><h4>Wins</h4>{wz1.performance.winsDistribution.map(row=><div class="distribution-row"><span>{row.label}</span><span class="distribution-track" aria-hidden="true"><span style={`--share:${row.sharePct}%`}></span></span><strong>{row.sharePct.toFixed(2)}%</strong></div>)}</div></div>
+     <h3>Tracked placements <small>BR + Resurgence · {formatNumber(wz1.placements.trackedMatches)} matches</small></h3>
+     <div class="placement-grid">{wz1.placements.rows.map(row=><div><span>{row.label}</span><strong>{formatNumber(row.count)}</strong><span>{row.sharePct.toFixed(1)}%</span></div>)}</div>
+     <p class="data-note">{wz1.performance.note} {wz1.placements.note}</p>
+    </div></details>
+    <details><summary>Cached match archive <span>Nov 15, 2022 · last tracker update</span></summary><div class="disclosure-body">
+     <div class="match-summary"><span><strong>1</strong> win</span><span><strong>37</strong> kills</span><span><strong>0.86</strong> K/D</span><span><strong>{formatNumber(wz1.matches.summary.damageDealt)}</strong> dealt</span><span><strong>{formatNumber(wz1.matches.summary.damageTaken)}</strong> taken</span><span><strong>{wz1.matches.summary.lobbyAvgKd.toFixed(2)}</strong> lobby avg.</span></div>
+     <div class="table-frame"><table class="match-table"><thead><tr><th>Place</th><th>Mode</th><th>Lobby K/D</th><th>Dealt</th><th>Taken</th><th>Kills</th><th>K/D</th></tr></thead><tbody>{wz1.matches.rows.map(row=><tr><td>{ordinal(row.placement)}</td><th>{row.mode}</th><td>{row.lobbyKd.toFixed(2)}</td><td>{formatNumber(row.dealt)}</td><td>{formatNumber(row.taken)}</td><td>{row.kills}</td><td>{row.kd.toFixed(2)}</td></tr>)}</tbody></table></div>
+     <p class="data-note">{wz1.matches.summary.note} Activision-server errors prevented a confirmed fresh pull.</p>
+    </div></details>
+    <details><summary>Unavailable in the archive <span>No values guessed</span></summary><ul class="unavailable">{wz1.unreadable.map(note=><li>{note}</li>)}</ul></details>
+   </div>
+  </div>;
+ })}
+</Base>

@@ -1,0 +1,43 @@
+---
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '@fontsource/ibm-plex-sans-condensed/latin-600.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-600.css';
+import '../styles/site.css';
+import { type EraKey, type ModeKey } from '../data/modes';
+interface Props { era: EraKey; mode: ModeKey; }
+const { era, mode } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const canonical = new URL(base, Astro.site);
+---
+<!doctype html>
+<html lang="en" data-era={era} data-mode={mode}>
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="theme-color" content="#0B0D10">
+ <meta name="description" content="Jack Spyhalski’s unofficial Warzone friends leaderboard and archived personal stats.">
+ <title>Warzone Stats · Friends archive</title>
+ <link rel="canonical" href={canonical}>
+ <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml">
+ <script src={`${base}app.js`} defer></script>
+</head>
+<body>
+ <a class="skip-link" href="#board">Skip to stats</a>
+ <header class="topbar">
+  <nav aria-label="Stats views">
+   <div class="era-switch segment" role="group" aria-label="Warzone era">
+    <a id="era-wz1" class="segment-option switch-option" href={`${base}?era=wz1&mode=${mode}#wz1-${mode}`} data-era-target="wz1" aria-current={era === 'wz1' ? 'page' : undefined}>WZ1</a>
+    <a id="era-wz2" class="segment-option switch-option" href={`${base}?era=wz2&mode=${mode}#wz2-${mode}`} data-era-target="wz2" aria-current={era === 'wz2' ? 'page' : undefined}>WZ2</a>
+   </div>
+   <div class="mode-switch segment" role="group" aria-label="Game mode">
+    <a class="segment-option switch-option" href={`${base}?era=${era}&mode=br#${era}-br`} data-mode-target="br" aria-current={mode === 'br' ? 'page' : undefined}>BR</a>
+    <a class="segment-option switch-option" href={`${base}?era=${era}&mode=res#${era}-res`} data-mode-target="res" aria-current={mode === 'res' ? 'page' : undefined}>Resurgence</a>
+   </div>
+  </nav>
+ </header>
+ <main id="board"><slot /></main>
+ <footer>Screens: WZ2 in-game · WZ1 Tracker.gg (Jack only) · Captured Nov 5, 2026 ET · Unofficial friends archive; not affiliated with Activision or Call of Duty.</footer>
+</body>
+</html>

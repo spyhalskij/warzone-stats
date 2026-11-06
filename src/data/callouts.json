@@ -1,0 +1,74 @@
+{
+  "captureDate": "2026-11-05",
+  "derivation": "maximum values from src/data/wz2.json; ties retain every player",
+  "modes": {
+    "br": {
+      "score": {
+        "label": "Highest score",
+        "names": [
+          "UNCBBALL0327"
+        ],
+        "value": 2826970,
+        "display": "2,826,970"
+      },
+      "wins": {
+        "label": "Most wins",
+        "names": [
+          "UNCBBALL0327"
+        ],
+        "value": 59,
+        "display": "59"
+      },
+      "ed": {
+        "label": "Best E/D",
+        "names": [
+          "PINGEDTUBA71289"
+        ],
+        "value": 3.85,
+        "display": "3.85"
+      },
+      "elims": {
+        "label": "Most eliminations",
+        "names": [
+          "PINGEDTUBA71289"
+        ],
+        "value": 4440,
+        "display": "4,440"
+      }
+    },
+    "res": {
+      "score": {
+        "label": "Highest score",
+        "names": [
+          "UNCBBALL0327"
+        ],
+        "value": 4720265,
+        "display": "4,720,265"
+      },
+      "wins": {
+        "label": "Most wins",
+        "names": [
+          "UNCBBALL0327"
+        ],
+        "value": 217,
+        "display": "217"
+      },
+      "ed": {
+        "label": "Best E/D",
+        "names": [
+          "PINGEDTUBA71289"
+        ],
+        "value": 4.17,
+        "display": "4.17"
+      },
+      "elims": {
+        "label": "Most eliminations",
+        "names": [
+          "UNCBBALL0327"
+        ],
+        "value": 8538,
+        "display": "8,538"
+      }
+    }
+  }
+}
