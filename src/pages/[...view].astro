@@ -30,7 +30,7 @@ const columns:Column[] = [
  {set:'detail',key:'timePlayed',label:'Time played (as displayed)',short:'Time',time:true}
 ];
 const cellInfo = (column:Column,player:typeof wz2.players[0],mode:ModeKey) => {
- const base=column.percent?'':column.set==='placements'?player[mode]?.career?.[column.key as 'games']??player[mode]?.placements?.[column.key as 'wins']:player[mode]?.[column.set]?.[column.key as 'elims'];
+ const base=column.percent?'':(column.set==='placements'||column.set==='detail')?player[mode]?.career?.[column.key as 'games']??(player[mode]?.placements as any)?.[column.key]:player[mode]?.[column.set]?.[column.key as 'elims'];
  if(column.percent){
   const games=player[mode]?.career?.games;
   const numerator=player[mode]?.placements?.[column.numerator!];
