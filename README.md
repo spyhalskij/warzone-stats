@@ -21,9 +21,9 @@ npm run build
 
 ## Source data
 
-All transcribed source values live in `src/data/wz1.json` and `src/data/wz2.json`. Each carries a source note and the Nov 5, 2026 capture date. WZ2 uses six in-game Friends Only screenshots and `ingame.md`; the 11-player rows merge career, eliminations, and placements. Missing tabs are shown as blanks, never zero. BR time-played values preserve the apparent screen truncation. WZ1 uses Tracker.gg's read-only archive and the saved screenshots; no missing data was guessed. Plunder is archived in JSON although the current UI uses only BR and Resurgence.
+All published source values live in `src/data/wz1.json` and `src/data/wz2.json`. Each carries a source note and the Nov 5, 2026 capture date. WZ2 uses six in-game Friends Only screenshots and `ingame.md`; the 11-player rows merge career, eliminations, and placements. Missing tabs are shown as blanks, never zero. BR time-played values preserve the apparent screen truncation. WZ1 uses Tracker.gg's read-only archive and the saved screenshots; no missing data was guessed. Plunder is archived in JSON although the current UI uses only BR and Resurgence.
 
-`scripts/build-data.mjs` checks the 11-player/two-mode/three-tab structure, E/D arithmetic, and season totals, then writes `src/data/callouts.json` from source maxima. Callouts are not edited by hand. The design brief was applied: one dark neutral palette, amber accents for Jack and the current controls, condensed display type, tabular monospace stats, sticky global controls, rank/name freeze, and compact numeric views. Styling is centralized in `src/styles/site.css`.
+`scripts/build-data.mjs` checks the 11-player/two-mode/three-tab structure, E/D arithmetic, season totals, and absence of omitted fields, then writes `src/data/callouts.json` from source maxima. Callouts are not edited by hand. The design brief was applied: one dark neutral palette, amber accents for Jack and the current controls, condensed display type, tabular monospace stats, sticky global controls, rank/name freeze, and compact numeric views. Styling is centralized in `src/styles/site.css`.
 
 ## Archive limitations
 
@@ -31,4 +31,4 @@ WZ1 Details panels and Seasons processed-match panels use different denominators
 
 ## Verification
 
-Browser checks cover query-first loading, era/mode persistence, four views, column groups, reversible sorting, missing values, WZ1 detail/season expansions, frozen names while horizontally scrolling, and 320px/390px/1280px document widths. `shots/` holds the live-site images at 390 and 1280 widths, including the switch controls. `playwright/` is development-only and ignored by Git.
+Browser checks cover query-first loading, explicit path routes, era/mode persistence, four views, exclusive column groups, sensible E/D/games/wins sorts, missing values, WZ1 detail/season expansions, frozen native table cells while horizontally scrolling, and 320px/390px/1280px document widths. Chromium mobile emulation and WebKit are both exercised locally and against the live deployment. `shots/` holds the live-site images at 390 and 1280 widths, including the switch controls. `playwright/` is development-only and ignored by Git.

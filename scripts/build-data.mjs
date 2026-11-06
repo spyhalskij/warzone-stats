@@ -31,12 +31,18 @@ const leaders = (mode, tab, key, decimals = 0) => {
 };
 const callouts = {};
 for (const mode of ['br', 'res']) callouts[mode] = {
-  score: { label: 'Highest score', ...leaders(mode, 'career', 'score') },
+  streak: { label: 'Best streak', ...leaders(mode, 'eliminations', 'streak') },
   wins: { label: 'Most wins', ...leaders(mode, 'placements', 'wins') },
   ed: { label: 'Best E/D', ...leaders(mode, 'eliminations', 'ed', 2) },
   elims: { label: 'Most eliminations', ...leaders(mode, 'eliminations', 'elims') }
 };
 fs.writeFileSync(new URL('../src/data/callouts.json', import.meta.url), JSON.stringify({ captureDate: wz2.captureDate, derivation: 'maximum values from src/data/wz2.json; ties retain every player', modes: callouts }, null, 2) + '\n');
-fs.mkdirSync(new URL('../public', import.meta.url), { recursive: true });
+const assertNoScore = value => {
+ if (value && typeof value === 'object') for (const [key, child] of Object.entries(value)) {
+  assert(!['score','scorePerMin','scorePerGame'].includes(key), `Unexpected published score field: ${key}`);
+  assertNoScore(child);
+ }
+};
+assertNoScore({ wz1, wz2, callouts });
 
 console.log('Validated WZ1 seasons and all 60 WZ2 source rows; callouts:', JSON.stringify(callouts));

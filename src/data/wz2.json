@@ -24,8 +24,6 @@
       "br": {
         "career": {
           "rank": 2,
-          "score": 2680330,
-          "scorePerMin": 203,
           "games": 574,
           "timePlayed": "13M 12S",
           "timeDisplayedTruncated": true
@@ -49,8 +47,6 @@
       "res": {
         "career": {
           "rank": 2,
-          "score": 3255921,
-          "scorePerMin": 365,
           "games": 682,
           "timePlayed": "6D 4H 29M",
           "timeDisplayedTruncated": false
@@ -78,8 +74,6 @@
       "br": {
         "career": {
           "rank": 1,
-          "score": 2826970,
-          "scorePerMin": 168,
           "games": 755,
           "timePlayed": "16M 48S",
           "timeDisplayedTruncated": true
@@ -103,8 +97,6 @@
       "res": {
         "career": {
           "rank": 1,
-          "score": 4720265,
-          "scorePerMin": 339,
           "games": 1120,
           "timePlayed": "9D 15H 35M",
           "timeDisplayedTruncated": false
@@ -132,8 +124,6 @@
       "br": {
         "career": {
           "rank": 3,
-          "score": 1624405,
-          "scorePerMin": 112,
           "games": 721,
           "timePlayed": "14M 26S",
           "timeDisplayedTruncated": true
@@ -157,8 +147,6 @@
       "res": {
         "career": {
           "rank": 3,
-          "score": 2150020,
-          "scorePerMin": 217,
           "games": 793,
           "timePlayed": "6D 20H 27M",
           "timeDisplayedTruncated": false
@@ -186,8 +174,6 @@
       "br": {
         "career": {
           "rank": 4,
-          "score": 1302805,
-          "scorePerMin": 154,
           "games": 413,
           "timePlayed": "8M 25S",
           "timeDisplayedTruncated": true
@@ -211,8 +197,6 @@
       "res": {
         "career": {
           "rank": 9,
-          "score": 249895,
-          "scorePerMin": 249,
           "games": 78,
           "timePlayed": "16H 40M",
           "timeDisplayedTruncated": false
@@ -240,8 +224,6 @@
       "br": {
         "career": {
           "rank": 5,
-          "score": 1019930,
-          "scorePerMin": 120,
           "games": 409,
           "timePlayed": "8M 29S",
           "timeDisplayedTruncated": true
@@ -265,8 +247,6 @@
       "res": {
         "career": {
           "rank": 10,
-          "score": 176785,
-          "scorePerMin": 185,
           "games": 76,
           "timePlayed": "15H 51M",
           "timeDisplayedTruncated": false
@@ -294,8 +274,6 @@
       "br": {
         "career": {
           "rank": 6,
-          "score": 913215,
-          "scorePerMin": 96,
           "games": 458,
           "timePlayed": "9M 27S",
           "timeDisplayedTruncated": true
@@ -319,8 +297,6 @@
       "res": {
         "career": {
           "rank": 5,
-          "score": 955085,
-          "scorePerMin": 179,
           "games": 430,
           "timePlayed": "3D 16H 34M",
           "timeDisplayedTruncated": false
@@ -348,8 +324,6 @@
       "br": {
         "career": {
           "rank": 7,
-          "score": 821465,
-          "scorePerMin": 99,
           "games": 417,
           "timePlayed": "8M 17S",
           "timeDisplayedTruncated": true
@@ -373,8 +347,6 @@
       "res": {
         "career": {
           "rank": 8,
-          "score": 304000,
-          "scorePerMin": 163,
           "games": 160,
           "timePlayed": "1D 6H 55M",
           "timeDisplayedTruncated": false
@@ -402,8 +374,6 @@
       "br": {
         "career": {
           "rank": 8,
-          "score": 784600,
-          "scorePerMin": 120,
           "games": 360,
           "timePlayed": "6M 31S",
           "timeDisplayedTruncated": true
@@ -421,8 +391,6 @@
       "res": {
         "career": {
           "rank": 6,
-          "score": 883310,
-          "scorePerMin": 234,
           "games": 314,
           "timePlayed": "2D 14H 44M",
           "timeDisplayedTruncated": false
@@ -450,8 +418,6 @@
       "br": {
         "career": {
           "rank": 9,
-          "score": 561730,
-          "scorePerMin": 78,
           "games": 340,
           "timePlayed": "7M 8S",
           "timeDisplayedTruncated": true
@@ -475,8 +441,6 @@
       "res": {
         "career": {
           "rank": 4,
-          "score": 1184155,
-          "scorePerMin": 150,
           "games": 643,
           "timePlayed": "5D 11H 12M",
           "timeDisplayedTruncated": false
@@ -504,8 +468,6 @@
       "br": {
         "career": {
           "rank": 10,
-          "score": 495135,
-          "scorePerMin": 123,
           "games": 185,
           "timePlayed": "4M 1S",
           "timeDisplayedTruncated": true
@@ -529,8 +491,6 @@
       "res": {
         "career": {
           "rank": 7,
-          "score": 344360,
-          "scorePerMin": 209,
           "games": 131,
           "timePlayed": "1D 3H 22M",
           "timeDisplayedTruncated": false

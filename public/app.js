@@ -1,87 +1,124 @@
 (() => {
  const KEY = 'warzone-stats:view';
+ const VERSION = 2;
+ const root = document.body;
  const base = document.querySelector('link[rel="icon"]').getAttribute('href').replace(/favicon\.svg$/, '');
- const defaults = { era:'wz2', mode:'br', group:'career', sort:{br:{key:'score',dir:'desc'},res:{key:'score',dir:'desc'}} };
+ const groups = {
+  career: ['games','timePlayed'],
+  eliminations: ['elims','deaths','ed','streak','avgElims'],
+  placements: ['wins','top10','avgPlacement','avgSurvival']
+ };
+ const defaults = {
+  era:'wz2', mode:'br', group:'eliminations',
+  sort:{br:{key:'ed',dir:'desc'},res:{key:'ed',dir:'desc'}}
+ };
+ const columns = {
+  games:{decimals:0},timePlayed:{time:true},elims:{decimals:0},deaths:{decimals:0},
+  ed:{decimals:2},streak:{decimals:0},avgElims:{decimals:0},wins:{decimals:0},
+  top10:{decimals:0},avgPlacement:{decimals:0},avgSurvival:{time:true}
+ };
+ const valid = (value, allowed) => Object.hasOwn(allowed, value);
+ const validKey = (key, group) => key === 'name' || groups[group]?.includes(key);
  let saved = {};
  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (_) {}
  const query = new URL(location.href).searchParams;
- const valid = (x, allowed) => allowed.includes(x);
- const era = valid(query.get('era'), ['wz1','wz2']) ? query.get('era') : valid(saved.era, ['wz1','wz2']) ? saved.era : defaults.era;
- const mode = valid(query.get('mode'), ['br','res']) ? query.get('mode') : valid(saved.mode, ['br','res']) ? saved.mode : defaults.mode;
- const group = valid(query.get('group'), ['career','eliminations','placements']) ? query.get('group') : valid(saved.group, ['career','eliminations','placements']) ? saved.group : defaults.group;
- const sort = saved.sort && typeof saved.sort === 'object' ? saved.sort : structuredClone(defaults.sort);
- if (valid(query.get('sort'), ['score','scorePerMin','games','timePlayed','elims','deaths','ed','streak','avgElims','wins','top10','avgPlacement','avgSurvival','name'])) sort[mode] = { key:query.get('sort'), dir:query.get('dir')==='asc'?'asc':'desc' };
- window.warzoneState = { era, mode, group, sort };
- const columns = {
-  score:{decimals:0}, scorePerMin:{decimals:0}, games:{decimals:0}, timePlayed:{time:true},
-  elims:{decimals:0}, deaths:{decimals:0}, ed:{decimals:2}, streak:{decimals:0}, avgElims:{decimals:0},
-  wins:{decimals:0}, top10:{decimals:0}, avgPlacement:{decimals:0}, avgSurvival:{time:true}
- };
+ // Path routes are explicit user intent. Query is canonical on the root/fallback;
+ // no-query static routes must never inherit a different saved/default era or mode.
+ const path = location.pathname.match(/\/(wz1|wz2)\/(br|res)\/?$/);
+ let era, mode;
+ if (query.has('era') || query.has('mode')) {
+   // On a static route with only one matching real page, relative controls use the
+  // base URL; links there carry a query and expected mode if one is supplied.
+  era = ['wz1','wz2'].includes(query.get('era')) ? query.get('era') : saved.era || defaults.era;
+  mode = ['br','res'].includes(query.get('mode')) ? query.get('mode') : saved.mode || defaults.mode;
+  if (path && (era !== path[1] || mode !== path[2])) { location.replace(`${base}?${query}#${era}-${mode}`); return; }
+ } else if (path) {
+  era = path[1]; mode = path[2];
+ } else {
+  era = ['wz1','wz2'].includes(saved.era) ? saved.era : defaults.era;
+  mode = ['br','res'].includes(saved.mode) ? saved.mode : defaults.mode;
+ }
+ let group = groups[query.get('group')] ? query.get('group') : groups[saved.group] ? saved.group : defaults.group;
+ const sort = {br:{...defaults.sort.br},res:{...defaults.sort.res}};
+ if (saved.version === VERSION) {
+  for (const boardMode of ['br','res']) {
+   if (validKey(saved.sort?.[boardMode]?.key, saved.sort?.[boardMode]?.group)) sort[boardMode] = {key:saved.sort[boardMode].key,dir:saved.sort[boardMode].dir === 'asc' ? 'asc' : 'desc'};
+  }
+ }
+ if (validKey(query.get('sort'), group)) sort[mode] = {key:query.get('sort'),dir:query.get('dir') === 'asc' ? 'asc' : 'desc'};
+ if (group !== (saved.group || defaults.group)) sort[mode] = {key:{career:'games',eliminations:'ed',placements:'wins'}[group],dir:'desc'};
+ else if (sort[mode].key !== 'name' && !groups[group].includes(sort[mode].key)) sort[mode] = {key:{career:'games',eliminations:'ed',placements:'wins'}[group],dir:'desc'};
+ window.warzoneState = {version:VERSION,era,mode,group,sort};
  const tables = [...document.querySelectorAll('table.leaderboard')];
- const tabOf = key => tables[0]?.querySelector(`th[data-key="${key}"]`)?.dataset.tab || 'career';
- const seconds = text => { let result=0; for (const p of String(text).matchAll(/(\d+)([DHMS])/g)) result += +p[1] * {D:86400,H:3600,M:60,S:1}[p[2]]; return result; };
- const compareValues = (a,b,key,dir) => {
-  if (key === 'name') return (dir==='asc'?1:-1) * a.dataset.name.localeCompare(b.dataset.name);
-  const ar=a.querySelector(`td[data-key="${key}"]`).dataset.value, br=b.querySelector(`td[data-key="${key}"]`).dataset.value;
-  if (!ar && !br) return a.dataset.name.localeCompare(b.dataset.name);
-  if (!ar) return 1; if (!br) return -1;
+ const seconds = text => {let result=0;for(const p of String(text).matchAll(/(\d+)([DHMS])/g))result+=+p[1]*{D:86400,H:3600,M:60,S:1}[p[2]];return result;};
+ const tabOf = key => tables[0]?.querySelector(`th[data-key="${key}"]`)?.dataset.tab || 'eliminations';
+ const compare = (a,b,key,dir) => {
+  if (key === 'name') return (dir==='asc'?1:-1)*a.dataset.name.localeCompare(b.dataset.name);
+  const ar=a.querySelector(`td[data-key="${key}"]`)?.dataset.value||'',br=b.querySelector(`td[data-key="${key}"]`)?.dataset.value||'';
+  if(!ar&&!br)return a.dataset.name.localeCompare(b.dataset.name);if(!ar)return 1;if(!br)return-1;
   const diff=columns[key]?.time?seconds(ar)-seconds(br):Number(ar)-Number(br);
-  return (dir==='asc'?1:-1)*diff || a.dataset.name.localeCompare(b.dataset.name);
+  return(dir==='asc'?1:-1)*diff||a.dataset.name.localeCompare(b.dataset.name);
  };
  function drawTable(table) {
-  const currentMode=table.dataset.mode, current=window.warzoneState.sort[currentMode] || defaults.sort[currentMode];
-  const key=current.key,dir=current.dir;
+  const currentMode=table.dataset.mode,current=sort[currentMode]||defaults.sort[currentMode],key=current.key,dir=current.dir;
   [...table.querySelectorAll('[data-tab]')].forEach(cell=>{
-   const active=cell.dataset.tab===window.warzoneState.group, pinned=cell.classList.contains('priority');
-   cell.hidden=!active&&!pinned; cell.classList.toggle('is-sorted',cell.dataset.key===key);
-   cell.classList.toggle('outside-group',!active);
+   const active=cell.dataset.tab===group;
+   cell.hidden=!active;cell.classList.toggle('is-sorted',active&&cell.dataset.key===key);
   });
-  const headers=[...table.tHead.rows[0].cells];
-  headers.forEach(th=>{
-   if(th.dataset.key===key){th.setAttribute('aria-sort',dir==='asc'?'ascending':'descending');th.querySelector('.chevron').textContent=dir==='asc'?'↑':'↓';th.querySelector('button').setAttribute('aria-label',`${th.querySelector('button').textContent.trim()} column, ${dir==='asc'?'ascending':'descending'}. Activate to reverse.`)}
+  [...table.tHead.rows[0].cells].forEach(th=>{
+   const button=th.querySelector('button');
+   if(th.dataset.key===key){th.setAttribute('aria-sort',dir==='asc'?'ascending':'descending');th.querySelector('.chevron').textContent=dir==='asc'?'↑':'↓';}
    else{th.removeAttribute('aria-sort');th.querySelector('.chevron').textContent='';}
+   const label=th.querySelector('.sr-only')?.textContent || 'Sort by player';
+   button.setAttribute('aria-label',`${label}${th.dataset.key===key?', '+dir+'ending; activate to reverse':''}`);
   });
-  const rows=[...table.tBodies[0].rows].sort((a,b)=>compareValues(a,b,key,dir));
+  const rows=[...table.tBodies[0].rows].sort((a,b)=>compare(a,b,key,dir));
   rows.forEach((row,i)=>{const rank=row.querySelector('[data-rank]');rank.textContent=String(i+1);rank.className=`rank${i<3?' rank-'+(i+1):''}`;table.tBodies[0].append(row);});
  }
  function applyState() {
-  const {era,mode,group,sort}=window.warzoneState;
   document.documentElement.dataset.era=era;document.documentElement.dataset.mode=mode;document.documentElement.dataset.group=group;
   document.querySelectorAll('.era-content').forEach(view=>{view.hidden=!(view.dataset.era===era&&view.dataset.mode===mode)});
-  document.querySelectorAll('.switch-option').forEach(link=>{
-   const active=link.dataset.eraTarget===era||link.dataset.modeTarget===mode;
-   if(active)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');
+  document.querySelectorAll('[data-era-target]').forEach(link=>{
+   if(link.dataset.eraTarget===era)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');
+   link.href=`${base}?era=${link.dataset.eraTarget}&mode=${mode}&group=${group}`;link.dataset.ready='true';
+  });
+  document.querySelectorAll('[data-mode-target]').forEach(link=>{
+   if(link.dataset.modeTarget===mode)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');
+   link.href=`${base}?era=${era}&mode=${link.dataset.modeTarget}&group=${group}`;link.dataset.ready='true';
   });
   document.querySelectorAll('.group-switch [data-group]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.group===group)));
-  const current=sort[mode]||defaults.sort[mode];sort[mode]=current;
   const activeTable=tables.find(table=>table.dataset.mode===mode);
   if(era==='wz2'&&activeTable)drawTable(activeTable);
   const title=document.querySelector(`.era-content[data-era="${era}"][data-mode="${mode}"] h1`);
   if(title)document.title=title.textContent+' · Warzone Stats';
-  const params=new URLSearchParams({era,mode,group});
-  if(era==='wz2'){params.set('sort',current.key);params.set('dir',current.dir)}
-  history.replaceState(null,'',`${location.pathname}?${params}#${era}-${mode}`);
-  try{localStorage.setItem(KEY,JSON.stringify(window.warzoneState))}catch(_){}
+  const params=new URLSearchParams({era,mode,group,sort:sort[mode].key,dir:sort[mode].dir});
+  if(!path)history.replaceState(null,'',`${base}?${params}#${era}-${mode}`);
+  try{localStorage.setItem(KEY,JSON.stringify(window.warzoneState));}catch(_){}
+  document.documentElement.dataset.appReady='true';
  }
- document.querySelectorAll('.switch-option').forEach(link=>link.addEventListener('click',event=>{
+ document.querySelectorAll('[data-era-target],[data-mode-target]').forEach(link=>link.addEventListener('click',event=>{
+  if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+  const target=new URL(link.href,location.origin);
+  if(path){event.preventDefault();location.href=`${base}${target.search}`;return;}
   event.preventDefault();
-  if(link.dataset.eraTarget)window.warzoneState.era=link.dataset.eraTarget;
-  if(link.dataset.modeTarget)window.warzoneState.mode=link.dataset.modeTarget;
+  if(link.dataset.eraTarget)era=link.dataset.eraTarget;
+  if(link.dataset.modeTarget)mode=link.dataset.modeTarget;
   applyState();
  }));
  document.querySelectorAll('.group-switch [data-group]').forEach(button=>button.addEventListener('click',()=>{
-  const next=button.dataset.group;window.warzoneState.group=next;
-  window.warzoneState.sort[window.warzoneState.mode]={key:{career:'score',eliminations:'elims',placements:'wins'}[next],dir:'desc'};
+  group=button.dataset.group;
+  const defaultSort={career:'games',eliminations:'ed',placements:'wins'}[group];
+  const direction=group==='placements'?'desc':'desc';
+  sort[window.warzoneState.mode]={key:defaultSort,dir:direction};
+  window.warzoneState.group=group;
   applyState();
  }));
  document.querySelectorAll('table.leaderboard th[data-key] button').forEach(button=>button.addEventListener('click',()=>{
-  const table=button.closest('table'),mode=table.dataset.mode,key=button.closest('th').dataset.key,current=window.warzoneState.sort[mode];
-  if(current.key===key)current.dir=current.dir==='desc'?'asc':'desc';
-  else{const first={name:'asc',score:'desc',scorePerMin:'desc',games:'desc',elims:'desc',deaths:'desc',ed:'desc',streak:'desc',avgElims:'desc',wins:'desc',top10:'desc',avgPlacement:'asc'}[key]||'desc';window.warzoneState.sort[mode]={key,dir:first}}
-  window.warzoneState.group=tabOf(key);
+  const table=button.closest('table'),boardMode=table.dataset.mode,key=button.closest('th').dataset.key,current=sort[boardMode],targetGroup=tabOf(key);
+  if(targetGroup!==group){group=targetGroup;window.warzoneState.group=group;sort[boardMode]={key,dir:key==='name'||key==='avgPlacement'?'asc':'desc'};}
+  else if(current.key===key)current.dir=current.dir==='desc'?'asc':'desc';
+  else sort[boardMode]={key,dir:key==='name'||key==='avgPlacement'?'asc':'desc'};
   applyState();
  }));
- // Static pages contain one matching board with data-static-view; the root and Pages
- // 404 fallback contain all four, which lets direct query URLs stay fully static.
  applyState();
 })();

@@ -3,13 +3,13 @@
   "derivation": "maximum values from src/data/wz2.json; ties retain every player",
   "modes": {
     "br": {
-      "score": {
-        "label": "Highest score",
+      "streak": {
+        "label": "Best streak",
         "names": [
-          "UNCBBALL0327"
+          "PINGEDTUBA71289"
         ],
-        "value": 2826970,
-        "display": "2,826,970"
+        "value": 19,
+        "display": "19"
       },
       "wins": {
         "label": "Most wins",
@@ -37,13 +37,13 @@
       }
     },
     "res": {
-      "score": {
-        "label": "Highest score",
+      "streak": {
+        "label": "Best streak",
         "names": [
-          "UNCBBALL0327"
+          "PINGEDTUBA71289"
         ],
-        "value": 4720265,
-        "display": "4,720,265"
+        "value": 22,
+        "display": "22"
       },
       "wins": {
         "label": "Most wins",
